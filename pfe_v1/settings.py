@@ -77,24 +77,29 @@ ROOT_URLCONF = 'pfe_v1.urls'
 WSGI_APPLICATION = 'pfe_v1.wsgi.application'
 
 # we only need the engine name, as heroku takes care of the rest
+
+
 DATABASES = {
-"default": {
-   "ENGINE": "django.db.backends.postgresql_psycopg2",
+    'default': {
+        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
+         'NAME': 'proj_db',                      
+         'USER': 'proj_user',
+         'PASSWORD': 'root',
+         'HOST': 'localhost',
+         'PORT' : '5432',
+     
+    }
 }
-}
+
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 #DATABASES = {'default': dj_database_url.config(default='postgres://myuser@localhost:5432/mydb')}
-DATABASES['default'] =  dj_database_url.config()
+
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-try: 
-from local_settings import *
-except Exception as e:
-pass
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -128,3 +133,4 @@ AUTH_PROFILE_MODULE = 'accounts.MyProfile'
 LOGIN_REDIRECT_URL = '/accounts/%(username)s/'  
 LOGIN_URL = '/accounts/signin/'  
 LOGOUT_URL = '/accounts/signout/' 
+
