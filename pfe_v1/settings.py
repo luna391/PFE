@@ -90,11 +90,11 @@ WSGI_APPLICATION = 'pfe_v1.wsgi.application'
 #    }
 #}
 
-DATABASES['default'] =  dj_database_url.config()
+#DATABASES['default'] =  dj_database_url.config()
 
-#DATABASES = {
-#    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-#}
+DATABASES = {
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+}
 
 #DATABASES['default'] =  dj_database_url.config()
 
