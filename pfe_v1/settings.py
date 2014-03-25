@@ -25,7 +25,7 @@ STATICFILES_DIRS = (
 SECRET_KEY = 'o6q-97_j4dg1(c=!p7&cuecy!(x35&v@ztvlz!%ghh-3uubnh+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'pfe_v1.wsgi.application'
 
 # we only need the engine name, as heroku takes care of the rest
 
-
+#DATABASES = {'default': dj_database_url.config(default='postgres://lawmlcxsswwgjy:f9Nqp7-ew4G2_EF15uaYxg9eAv@ec2-184-73-251-115.compute-1.amazonaws.com:5432/dni9jtjflgjmg')}
 #DATABASES = {
 #    'default': {
 #        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'pfe_v1.wsgi.application'
 #    }
 #}
 
-#DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] =  dj_database_url.config()
 
 #DATABASES = {
 #    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
@@ -102,7 +102,7 @@ WSGI_APPLICATION = 'pfe_v1.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 #DATABASES = {'default': dj_database_url.config(default='postgres://myuser@localhost:5432/mydb')}
-DATABASES = {'default': dj_database_url.config(default='postgres://lawmlcxsswwgjy:f9Nqp7-ew4G2_EF15uaYxg9eAv@ec2-184-73-251-115.compute-1.amazonaws.com:5432/dni9jtjflgjmg')}
+
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
