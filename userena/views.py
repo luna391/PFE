@@ -493,7 +493,7 @@ def signin(request, auth_form=AuthenticationForm,
             		ip = request.META.get('REMOTE_ADDR')
             	print ip 
             	gi = GeoIP.new(GeoIP.GEOIP_STANDARD)
-            	gi = GeoIP.open("./GeoIP/GeoIP.dat",GeoIP.GEOIP_STANDARD)
+            	gi = GeoIP.open('./GeoIP/GeoIP.dat',GeoIP.GEOIP_STANDARD)
                 gicity = GeoIP.open("./GeoIP/GeoLiteCity.dat",GeoIP.GEOIP_STANDARD)
             	your_city = gicity.record_by_addr(ip)
                 print gi.country_name_by_addr(ip)
