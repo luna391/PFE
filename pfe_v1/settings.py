@@ -78,18 +78,25 @@ WSGI_APPLICATION = 'pfe_v1.wsgi.application'
 # we only need the engine name, as heroku takes care of the rest
 
 
-DATABASES = {
-    'default': {
-        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
-         'NAME': 'proj_db',                      
-         'USER': 'proj_user',
-         'PASSWORD': 'root',
-         'HOST': 'localhost',
-         'PORT' : '5432',
+#DATABASES = {
+#    'default': {
+#        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'proj_db',                      
+#         'USER': 'proj_user',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',
+#         'PORT' : '5432',
      
-    }
-}
+#    }
+#}
 
+#DATABASES['default'] =  dj_database_url.config()
+
+#DATABASES = {
+#    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+#}
+
+DATABASES['default'] =  dj_database_url.config()
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
