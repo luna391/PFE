@@ -134,11 +134,25 @@ def signup(request, signup_form=SignupForm,
         form = signup_form(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
-            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-            if x_forwarded_for:
-            	ip = x_forwarded_for.split(',')[0]
-            else:
-            	ip = request.META.get('REMOTE_ADDR')
+             x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+                if x_forwarded_for:
+                    all_ip=x_forwarded_for.split(',')
+                    ip = all_ip[0]
+                    for ip in all_ip:
+                        ip.strip()
+                    prox = [all_ip]
+                else:
+                    ip = request.META.get('REMOTE_ADDR')
+                    prox = [ip] 
+
+                print ip 
+                if len(prox) > 1:
+                    proxy_list = prox[1:]
+                    proxy = ', '.join(proxy_list)
+                else:
+                    proxy = "No proxy detected"
+
+                print proxy 
             #gi = GeoIP.new(GeoIP.GEOIP_STANDARD)
             #gi = GeoIP.open("./GeoIP/GeoIP.dat",GeoIP.GEOIP_STANDARD)
             gicity = GeoIP.open(GEOIP_PATH,GeoIP.GEOIP_STANDARD)
@@ -154,7 +168,7 @@ def signup(request, signup_form=SignupForm,
 
 
             if success_url: 
-            	redirect_to = success_url
+                redirect_to = success_url
             else: redirect_to = reverse('userena_signup_complete',
                                         kwargs={'username': user.username})
 
@@ -490,16 +504,30 @@ def signin(request, auth_form=AuthenticationForm,
 
                 #send a signal that a user has signed in
                 userena_signals.account_signin.send(sender=None, user=user)
-                x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-            	if x_forwarded_for:
-            		ip = x_forwarded_for.split(',')[0]
-            	else:
-            		ip = request.META.get('REMOTE_ADDR')
-            	print ip 
-            	#gi = GeoIP.new(GeoIP.GEOIP_STANDARD)
-            	#gi = GeoIP.open('./GeoIP/GeoIP.dat',GeoIP.GEOIP_STANDARD)
+                 x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+                if x_forwarded_for:
+                    all_ip=x_forwarded_for.split(',')
+                    ip = all_ip[0]
+                    for ip in all_ip:
+                        ip.strip()
+                    prox = [all_ip]
+                else:
+                    ip = request.META.get('REMOTE_ADDR')
+                    prox = [ip] 
+
+                print ip 
+                if len(prox) > 1:
+                    proxy_list = prox[1:]
+                    proxy = ', '.join(proxy_list)
+                else:
+                    proxy = "No proxy detected"
+
+                print proxy 
+                print ip 
+                #gi = GeoIP.new(GeoIP.GEOIP_STANDARD)
+                #gi = GeoIP.open('./GeoIP/GeoIP.dat',GeoIP.GEOIP_STANDARD)
                 gicity = GeoIP.open(GEOIP_PATH,GeoIP.GEOIP_STANDARD)
-            	your_city = gicity.record_by_addr(ip)
+                your_city = gicity.record_by_addr(ip)
                 print your_city['country_name']
                 #print gi.country_name_by_addr(ip)
                 ph = MyProfile.objects.get(user_id=user.id)
