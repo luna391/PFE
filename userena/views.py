@@ -145,15 +145,18 @@ def signup(request, signup_form=SignupForm,
                 ip = request.META.get('REMOTE_ADDR')
                 prox = [ip] 
 
-            print ip 
+            
             if len(prox) > 1:
                 proxy_list = prox[1:]
                 proxy = ', '.join(proxy_list)
             else:
                 proxy = "No proxy detected"
 
-            print proxy
+            #print proxy
             print ip 
+            if request.is_secure():
+                print "No proxy detected"
+            else print "proxy detected"
             #gi = GeoIP.new(GeoIP.GEOIP_STANDARD)
             #gi = GeoIP.open("./GeoIP/GeoIP.dat",GeoIP.GEOIP_STANDARD)
             gicity = GeoIP.open(GEOIP_PATH,GeoIP.GEOIP_STANDARD)
