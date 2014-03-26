@@ -134,23 +134,23 @@ def signup(request, signup_form=SignupForm,
         form = signup_form(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
-             x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-                if x_forwarded_for:
-                    all_ip=x_forwarded_for.split(',')
-                    ip = all_ip[0]
-                    for ip in all_ip:
-                        ip.strip()
-                    prox = [all_ip]
-                else:
-                    ip = request.META.get('REMOTE_ADDR')
-                    prox = [ip] 
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                all_ip=x_forwarded_for.split(',')
+                ip = all_ip[0]
+                for ip in all_ip:
+                    ip.strip()
+                prox = [all_ip]
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+                prox = [ip] 
 
-                print ip 
-                if len(prox) > 1:
-                    proxy_list = prox[1:]
-                    proxy = ', '.join(proxy_list)
-                else:
-                    proxy = "No proxy detected"
+            print ip 
+            if len(prox) > 1:
+                proxy_list = prox[1:]
+                proxy = ', '.join(proxy_list)
+            else:
+                proxy = "No proxy detected"
 
             print proxy
             print ip 
@@ -505,7 +505,7 @@ def signin(request, auth_form=AuthenticationForm,
 
                 #send a signal that a user has signed in
                 userena_signals.account_signin.send(sender=None, user=user)
-                 x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+                x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
                 if x_forwarded_for:
                     all_ip=x_forwarded_for.split(',')
                     ip = all_ip[0]
