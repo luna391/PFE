@@ -34,6 +34,9 @@ from accounts.models import MyProfile,Location,Code_db,Verif_Location
 from django.utils import timezone
 import GeoIP
 
+
+GEOIP_PATH = '/app/GeoLiteCity.dat'
+
 class ExtraContextTemplateView(TemplateView):
     """ Add extra context to a simple template view """
     extra_context = None
