@@ -152,7 +152,8 @@ def signup(request, signup_form=SignupForm,
                 else:
                     proxy = "No proxy detected"
 
-                print proxy 
+            print proxy
+            print ip 
             #gi = GeoIP.new(GeoIP.GEOIP_STANDARD)
             #gi = GeoIP.open("./GeoIP/GeoIP.dat",GeoIP.GEOIP_STANDARD)
             gicity = GeoIP.open(GEOIP_PATH,GeoIP.GEOIP_STANDARD)
@@ -515,7 +516,6 @@ def signin(request, auth_form=AuthenticationForm,
                     ip = request.META.get('REMOTE_ADDR')
                     prox = [ip] 
 
-                print ip 
                 if len(prox) > 1:
                     proxy_list = prox[1:]
                     proxy = ', '.join(proxy_list)
