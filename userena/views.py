@@ -136,10 +136,11 @@ def signup(request, signup_form=SignupForm,
             	ip = x_forwarded_for.split(',')[0]
             else:
             	ip = request.META.get('REMOTE_ADDR')
-            gi = GeoIP.new(GeoIP.GEOIP_STANDARD)
-            gi = GeoIP.open("./GeoIP/GeoIP.dat",GeoIP.GEOIP_STANDARD)
-            gicity = GeoIP.open("./GeoIP/GeoLiteCity.dat",GeoIP.GEOIP_STANDARD)
+            #gi = GeoIP.new(GeoIP.GEOIP_STANDARD)
+            #gi = GeoIP.open("./GeoIP/GeoIP.dat",GeoIP.GEOIP_STANDARD)
+            gicity = GeoIP.open(GEOIP_PATH,GeoIP.GEOIP_STANDARD)
             your_city = gicity.record_by_addr(ip)
+            print your_city['country_name']
             ph = MyProfile.objects.get(user_id=user.id)
             loc = Location(client=ph, country="default", city="default" , ip = ip, proxy ="default" )
             loc.save()
@@ -492,11 +493,12 @@ def signin(request, auth_form=AuthenticationForm,
             	else:
             		ip = request.META.get('REMOTE_ADDR')
             	print ip 
-            	gi = GeoIP.new(GeoIP.GEOIP_STANDARD)
-            	gi = GeoIP.open('./GeoIP/GeoIP.dat',GeoIP.GEOIP_STANDARD)
-                gicity = GeoIP.open("./GeoIP/GeoLiteCity.dat",GeoIP.GEOIP_STANDARD)
+            	#gi = GeoIP.new(GeoIP.GEOIP_STANDARD)
+            	#gi = GeoIP.open('./GeoIP/GeoIP.dat',GeoIP.GEOIP_STANDARD)
+                gicity = GeoIP.open(GEOIP_PATH,GeoIP.GEOIP_STANDARD)
             	your_city = gicity.record_by_addr(ip)
-                print gi.country_name_by_addr(ip)
+                print your_city['country_name']
+                #print gi.country_name_by_addr(ip)
                 ph = MyProfile.objects.get(user_id=user.id)
                 verif_loc = Verif_Location(client=ph, country="default", city="default" , ip = ip, proxy ="default" )
                 verif_loc.save()

@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 import dj_database_url
 
+GEOIP_PATH = '/app/GeoLiteCity.dat'
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 STATICFILES_DIRS = (
