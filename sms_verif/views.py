@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext, loader
 from sms_verif.forms import Code
-from accounts.models import MyProfile,GeoLocation1,GeoLcation2,Code_db,Reputation
+from accounts.models import MyProfile,GeoLocation1,GeoLocation2,Code_db,Reputation
 
 def code(request):
     verif_code = False
