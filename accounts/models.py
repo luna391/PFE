@@ -8,14 +8,15 @@ class MyProfile(UserenaBaseProfile):
                         verbose_name=_('user'),related_name='my_profile')
     phone = models.CharField(max_length=12)
 
-class Location(models.Model):
+class GeoLocation1(models.Model):
     client = models.ForeignKey(MyProfile)
     ip = models.GenericIPAddressField()
     country = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     proxy = models.BooleanField()
 
-class Verif_Location(models.Model):
+
+class GeoLocation2(models.Model):
     client = models.ForeignKey(MyProfile)
     ip = models.GenericIPAddressField()
     country = models.CharField(max_length=100)
@@ -23,6 +24,17 @@ class Verif_Location(models.Model):
     proxy = models.BooleanField()
 
 class Code_db(models.Model):
+    client = models.ForeignKey(MyProfile)
 	code = models.CharField(max_length=6)
 	sav_date = models.DateTimeField()
+
+class Reputation(models.Model):
+    client = models.ForeignKey(MyProfile)
+    #assword_doesntmatch = models.BooleanField()
+    verif_code_doesntMatch = models.BooleanField()
+    country_doesntMatch = models.BooleanField()
+    proxy_detect = models.BooleanField()
+    score = models.IntegerField()
+
+
   

@@ -30,7 +30,7 @@ from twilio.rest import TwilioRestClient
 import warnings
 import random
 import string
-from accounts.models import MyProfile,Location,Code_db,Verif_Location
+from accounts.models import MyProfile, GeoLocation1, Code_db, GeoLocation2, Reputation
 from django.utils import timezone
 import GeoIP
 
@@ -154,16 +154,15 @@ def signup(request, signup_form=SignupForm,
 
             #print proxy
             print ip 
-            if request.is_secure():
-                print "No proxy detected"
-            else print "proxy detected"
-            #gi = GeoIP.new(GeoIP.GEOIP_STANDARD)
-            #gi = GeoIP.open("./GeoIP/GeoIP.dat",GeoIP.GEOIP_STANDARD)
+            #if request.is_secure():
+            #    print "No proxy detected"
+            #else print "proxy detected"
+
             gicity = GeoIP.open(GEOIP_PATH,GeoIP.GEOIP_STANDARD)
             your_city = gicity.record_by_addr(ip)
-            print your_city['country_name']
+            #print your_city['country_name']
             ph = MyProfile.objects.get(user_id=user.id)
-            loc = Location(client=ph, country="default", city="default" , ip = ip, proxy ="default" )
+            loc = GeoLocation1(client=ph,ip = ip, country=your_city['country_name'], city= your_city['city'], proxy =proxy)
             loc.save()
 
             # Send the signup complete signal
@@ -486,8 +485,9 @@ def signin(request, auth_form=AuthenticationForm,
         Form used for authentication supplied by ``auth_form``.
 
     """
+    verif_pwd = True
     form = auth_form()
-
+    
     if request.method == 'POST':
         form = auth_form(request.POST, request.FILES)
         if form.is_valid():
@@ -498,6 +498,7 @@ def signin(request, auth_form=AuthenticationForm,
                                 password=password)
             if user.is_active:
                 login(request, user)
+                verif_pwd = False
                 if remember_me:
                     request.session.set_expiry(userena_settings.USERENA_REMEMBER_ME_DAYS[1] * 86400)
                 else: request.session.set_expiry(0)
@@ -534,19 +535,12 @@ def signin(request, auth_form=AuthenticationForm,
                 print your_city['country_name']
                 #print gi.country_name_by_addr(ip)
                 ph = MyProfile.objects.get(user_id=user.id)
-                verif_loc = Verif_Location(client=ph, country="default", city="default" , ip = ip, proxy ="default" )
-                verif_loc.save()
+                loc = GeoLocation2(client=ph,ip = ip, country=your_city['country_name'], city= your_city['city'], proxy = proxy)
+                loc.save()
                 verif_code = id_generator()
-                c = Code_db(code=verif_code,sav_date=timezone.now())
+                c = Code_db(client=ph,code=verif_code,sav_date=timezone.now())
                 c.save()
-                print c.code 
-                print c.sav_date
-               # u = UserenaSignup.objects.get(user_id=user.id)
-               # print u.user_id
-                print ph.phone
                 message = client.messages.create(to="+216"+ph.phone, from_="+16122840519",body=verif_code)
-                
-
                 redirect_to = redirect_signin_function(
                     request.REQUEST.get(redirect_field_name), user)
                 return HttpResponseRedirect(redirect_to)
