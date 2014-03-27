@@ -25,8 +25,8 @@ class GeoLocation2(models.Model):
 
 class Code_db(models.Model):
     client = models.ForeignKey(MyProfile)
-	code = models.CharField(max_length=6)
-	sav_date = models.DateTimeField()
+    code = models.CharField(max_length=6)
+    sav_date = models.DateTimeField()
 
 class Reputation(models.Model):
     client = models.ForeignKey(MyProfile)
