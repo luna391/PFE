@@ -14,6 +14,7 @@ def code(request):
             # Ici nous pouvons traiter les données du formulaire
             verif_num = form.cleaned_data['verif_num']
             obj = Code_db.objects.latest('sav_date')
+            ph = MyProfile.objects.get(user_id=obj.client_id)
             loc1 =  GeoLocation1.objects.get(client_id=obj.client_id)
             loc2 =  GeoLocation2.objects.get(client_id=obj.client_id)
             if loc1.country == loc2.country:
