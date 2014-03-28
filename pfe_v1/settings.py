@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'pfe_v1.wsgi.application'
 
 # we only need the engine name, as heroku takes care of the rest
 
-DATABASES = {'default': dj_database_url.config(default=' postgres://enrwlaidevdggx:by8cQdmCdxAfxNqiwIMCAtPcXW@ec2-54-204-32-91.compute-1.amazonaws.com:5432/d6i9sui3b0m8r7')}
+DATABASES = {'default': dj_database_url.config(default='postgres://postgres://ncrparrxvkpsxp:4zoHIiVUsDGegcs9mctoxZBXen@ec2-54-225-135-30.compute-1.amazonaws.com:5432/d2v8cqo927fhfj')}
 #DATABASES = {
 #    'default': {
 #        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
