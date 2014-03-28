@@ -15,7 +15,7 @@ def code(request):
             obj = Code_db.objects.latest('sav_date')
             ph = MyProfile.objects.get(id=obj.client_id)
             loc1 =  GeoLocation1.objects.get(client_id=obj.client_id)
-            loc2= GeoLocation2.objects.filter(client_id=obj.client_id).order_by('-id')[0]
+            loc2= GeoLocation2.objects.filter(client_id=obj.client_id).order_by('-id')[:-1][0]
             #loc2 =  GeoLocation2.objects.get(client_id=obj.client_id)
             if loc1.country == loc2.country:
                 verif_country = False
