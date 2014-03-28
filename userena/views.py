@@ -162,7 +162,7 @@ def signup(request, signup_form=SignupForm,
             your_city = gicity.record_by_addr(ip)
             #print your_city['country_name']
             ph = MyProfile.objects.get(user_id=user.id)
-            loc = GeoLocation1(client=ph,ip = ip, country=your_city['country_name'], city= your_city['city'], proxy =proxy)
+            loc = GeoLocation1(client=ph,ip = ip, country=your_city['country_name'], city= "default", proxy =proxy)
             loc.save()
 
             # Send the signup complete signal
@@ -535,7 +535,7 @@ def signin(request, auth_form=AuthenticationForm,
                 print your_city['country_name']
                 #print gi.country_name_by_addr(ip)
                 ph = MyProfile.objects.get(user_id=user.id)
-                loc = GeoLocation2(client=ph,ip = ip, country=your_city['country_name'], city= your_city['city'], proxy = proxy)
+                loc = GeoLocation2(client=ph,ip = ip, country=your_city['country_name'], city= "default",  proxy = proxy)
                 loc.save()
                 verif_code = id_generator()
                 c = Code_db(client=ph,code=verif_code,sav_date=timezone.now())
