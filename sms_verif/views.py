@@ -16,6 +16,7 @@ def code(request):
             ph = MyProfile.objects.get(id=obj.client_id)
             loc1 =  GeoLocation1.objects.get(client_id=obj.client_id)
             loc2= GeoLocation2.objects.filter(client_id=obj.client_id).order_by('-id')[:-1][0]
+            print loc2.country
             #loc2 =  GeoLocation2.objects.get(client_id=obj.client_id)
             if loc1.country == loc2.country:
                 verif_country = False
