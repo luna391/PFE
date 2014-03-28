@@ -7,7 +7,6 @@ from sms_verif.forms import Code
 from accounts.models import MyProfile,GeoLocation1,GeoLocation2,Code_db,Reputation
 
 def code(request):
-    verif_code = False
     if request.method == 'POST':  # S'il s'agit d'une requête POST
         form = Code(request.POST)  # Nous reprenons les données
         if form.is_valid(): 
@@ -22,13 +21,14 @@ def code(request):
             else: verif_country = True
 
             if verif_num==obj.code:
-                verif_code = True
+                verif_code = False
+            else: verif_code = True
+            cal = 0.3*verif_country+07*verif_code
+            rep = Reputation(client=ph, verif_code_doesntMatch=verif_code, country_doesntMatch=verif_country ,proxy_detect="default", score=cal)
+            rep.save()
+            if verif_num==obj.code:
                 return HttpResponseRedirect('/accounts/')
         return HttpResponseRedirect('/accounts/signin')
-
     else: # Si ce n'est pas du POST, c'est probablement une requête GET
         form = Code()  # Nous créons un formulaire vide
-    cal = 0.3*verif_country+07*verif_code
-    rep = Reputation(client=ph, verif_code_doesntMatch=verif_code, country_doesntMatch=verif_country ,proxy_detect="default", score=cal)
-    rep.save()
     return render(request, 'verif/code.html', locals())
