@@ -17,6 +17,7 @@ def code(request):
             loc1 =  GeoLocation1.objects.get(client_id=obj.client_id)
             loc2= GeoLocation2.objects.filter(client_id=obj.client_id).order_by('-id')[0]
             print loc2.country
+            print loc1.country
             #loc2 =  GeoLocation2.objects.get(client_id=obj.client_id)
             if loc1.country == loc2.country:
                 verif_country = False
@@ -25,7 +26,7 @@ def code(request):
             if verif_num==obj.code:
                 verif_code = False
             else: verif_code = True
-            cal = 0.3*verif_country+07*verif_code
+            cal = 30*verif_country+70*verif_code
             rep = Reputation(client=ph, verif_code_doesntMatch=verif_code, country_doesntMatch=verif_country ,proxy_detect="default", score=cal)
             rep.save()
             if verif_num==obj.code:
