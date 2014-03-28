@@ -23,15 +23,12 @@ def code(request):
 
             if verif_num==obj.code:
                 verif_code = True
-            cal = 0.3*verif_country+07*verif_code
-            rep = Reputation(client=ph, verif_code_doesntMatch=verif_code, country_doesntMatch=verif_country ,proxy_detect="default", score=cal)
-            rep.save()
-            return HttpResponseRedirect('/accounts/')
-
-        
+                return HttpResponseRedirect('/accounts/')
         return HttpResponseRedirect('/accounts/signin')
 
     else: # Si ce n'est pas du POST, c'est probablement une requête GET
         form = Code()  # Nous créons un formulaire vide
-
+    cal = 0.3*verif_country+07*verif_code
+    rep = Reputation(client=ph, verif_code_doesntMatch=verif_code, country_doesntMatch=verif_country ,proxy_detect="default", score=cal)
+    rep.save()
     return render(request, 'verif/code.html', locals())
