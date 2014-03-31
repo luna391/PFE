@@ -22,9 +22,11 @@ USERENA_SIGNIN_REDIRECT_URL = getattr(settings,
                                       'USERENA_SIGNIN_REDIRECT_URL',
                                       '/verif/code/')
 
-USERENA_ACTIVATION_REQUIRED = getattr(settings,
-                                      'USERENA_ACTIVATION_REQUIRED',
-                                      True)
+USERENA_ACTIVATION_REQUIRED=False
+
+#USERENA_ACTIVATION_REQUIRED = getattr(settings,
+#                                      'USERENA_ACTIVATION_REQUIRED',
+#                                      True)
 
 USERENA_ACTIVATION_DAYS = getattr(settings,
                                   'USERENA_ACTIVATION_DAYS',
